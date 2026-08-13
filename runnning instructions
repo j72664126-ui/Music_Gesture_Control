@@ -1,0 +1,41 @@
+Simple Startup
+Terminal 1 — VLC
+1)
+
+cvlc --extraintf rc --rc-host 0.0.0.0:4212 ~/Music-gesture-Control/music/*
+
+Leave it running.
+
+Terminal 2 — Docker
+1)
+xhost +local:docker
+
+
+2)
+cd ~/jetson-containers
+
+
+3)
+sudo docker run --runtime nvidia --env NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics -it --rm --network host --shm-size=8g -e DISPLAY=$DISPLAY -e XAUTHORITY=/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v $HOME/.Xauthority:/root/.Xauthority:rw -v /tmp/argus_socket:/tmp/argus_socket -v /home/nvidia/Music-gesture-Control:/workspace/Music-gesture-Control --device /dev/video0 --device /dev/video1 --device /dev/snd dustynv/jetson-inference:r36.3.0
+
+
+Inside Docker
+
+4)
+cd /workspace/Music-gesture-Control
+python3 live.py
+
+
+
+
+Controls
+
+
+
+🖐️ PLAY → Play
+✊ PAUSE → Pause
+👉 NEXT → Next
+👈 PREVIOUS → Previous
+NONE → Nothing
+
+Press Q to stop.
